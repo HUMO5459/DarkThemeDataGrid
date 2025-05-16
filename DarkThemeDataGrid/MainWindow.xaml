@@ -5,27 +5,68 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DarkThemeDataGrid"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1024" Background="DimGray">
+        Title="MainWindow" Height="800" Width="1300" Background="DimGray">
     <Grid>
-        <DataGrid x:Name="dataGrid" 
-                  AutoGenerateColumns="False" 
-                  HeadersVisibility="All"
-                  Background="#1E1E1E" 
-                  Foreground="White" 
-                  GridLinesVisibility="All"
-                  BorderBrush="#2D2D30" 
-                  RowBackground="#2D2D30" 
-                  AlternatingRowBackground="#252526"
-                  HorizontalGridLinesBrush="#3F3F46" 
-                  VerticalGridLinesBrush="#3F3F46"
-                  CanUserAddRows="False" 
-                  Margin="10"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Sarlavha paneli -->
+        <Border Grid.Row="0" Background="#007BFF" Padding="10">
+            <TextBlock Text="May 2025 oyidagi statistikalar" Foreground="White" FontSize="20" FontWeight="Bold"/>
+        </Border>
+
+        <!-- Boshqaruv paneli -->
+        <Grid Grid.Row="1" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Sana ko'rsatkich -->
+            <DatePicker Grid.Column="0" SelectedDate="05/16/2025" Width="150" Margin="5"/>
+            
+            <!-- Kalendar tugmasi -->
+            <Button Grid.Column="1" Width="40" Height="30" Margin="5">
+                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE787;" FontSize="16"/>
+            </Button>
+
+            <!-- Navigatsiya tugmalari -->
+            <StackPanel Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Border BorderThickness="1" BorderBrush="#DDDDDD" CornerRadius="4" Margin="5">
+                    <Button Content="◀ Oldingi oy" Foreground="#DC3545" Background="White" BorderThickness="0" Padding="10,5"/>
+                </Border>
+                <Border BorderThickness="1" BorderBrush="#DDDDDD" CornerRadius="4" Margin="5">
+                    <Button Content="Joriy oy" Foreground="#007BFF" Background="White" BorderThickness="0" Padding="10,5"/>
+                </Border>
+                <Border BorderThickness="1" BorderBrush="#DDDDDD" CornerRadius="4" Margin="5">
+                    <Button Content="Keyingi oy ▶" Foreground="#007BFF" Background="White" BorderThickness="0" Padding="10,5"/>
+                </Border>
+            </StackPanel>
+        </Grid>
+
+        <!-- Asosiy jadval -->
+        <DataGrid Grid.Row="2" 
+                  Margin="10" 
+                  AutoGenerateColumns="False"
+                  HeadersVisibility="All" 
                   IsReadOnly="True"
-                  CanUserDeleteRows="False"
-                  FontSize="18">
+                  CanUserResizeColumns="False"
+                  CanUserResizeRows="False"
+                  GridLinesVisibility="All" 
+                  BorderThickness="1"
+                  AlternatingRowBackground="Gray" 
+                  RowBackground="Gray"
+                  CanUserReorderColumns="False"
+                  CanUserSortColumns="False"
+                  Name="StatisticsGrid">
             <DataGrid.Resources>
                 <Style TargetType="DataGridColumnHeader">
-                    <Setter Property="Background" Value="#2D2D30"/>
+                    <Setter Property="Background" Value="DarkGray"/>
                     <Setter Property="Foreground" Value="White"/>
                     <Setter Property="FontWeight" Value="Bold"/>
                     <Setter Property="BorderBrush" Value="#3F3F46"/>
@@ -34,7 +75,7 @@
                     <Setter Property="FontSize" Value="18"/>
                 </Style>
                 <Style TargetType="DataGridRow">
-                    <Setter Property="BorderBrush" Value="#3F3F46"/>
+                    <Setter Property="BorderBrush" Value="DimGray"/>
                     <Setter Property="BorderThickness" Value="0,0,0,1"/>
                     <Setter Property="FontSize" Value="18"/>
                     <Setter Property="Height" Value="50"/>
@@ -42,44 +83,14 @@
                 </Style>
                 <Style TargetType="DataGridCell">
                     <Setter Property="Padding" Value="5"/>
-                    <Setter Property="BorderBrush" Value="#3F3F46"/>
+                    <Setter Property="BorderBrush" Value="SlateGray"/>
                     <Setter Property="BorderThickness" Value="0,0,1,1"/>
                     <Setter Property="FontSize" Value="18"/>
                     <Setter Property="Height" Value="50"/>
                     <Setter Property="VerticalAlignment" Value="Center"/>
                 </Style>
             </DataGrid.Resources>
-
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Order ID" Binding="{Binding OrderId}" Width="*"/>
-                <DataGridTextColumn Header="Customer ID" Binding="{Binding CustomerId}" Width="*"/>
-                <DataGridTextColumn Header="Customer Name" Binding="{Binding CustomerName}" Width="*"/>
-                <DataGridTextColumn Header="Ship Country" Binding="{Binding ShipCountry}" Width="*"/>
-                <DataGridTextColumn Header="Shipping Date" Binding="{Binding ShippingDate}" Width="*"/>
-                <DataGridCheckBoxColumn Header="Delivery Status" Binding="{Binding DeliveryStatus}" Width="*"/>
-
-                <!-- 🖼 Rasm ustuni -->
-                <DataGridTemplateColumn Header="Product Image" Width="150">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Image Source="{Binding ImagePath}"
-                                   Height="50" Width="50"
-                                   Cursor="Hand"
-                                   MouseLeftButtonUp="Image_MouseLeftButtonUp"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-
-                <!-- ✏️ Edit button ustuni -->
-                <DataGridTemplateColumn Header="Actions" Width="100">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button Content="Edit" x:Name="EditButton" Click="EditButton_Click"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-
+            
         </DataGrid>
     </Grid>
 </Window>
